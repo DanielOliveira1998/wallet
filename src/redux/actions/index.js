@@ -3,6 +3,7 @@ import getCoinsAPIData from '../../services/awasomeAPI';
 
 export const REQUEST_API = 'REQUEST_API';
 export const RESQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
+export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
 
 const requestAPICoins = () => ({
   type: requestAPICoins,
@@ -20,3 +21,10 @@ export const fetchAPICoinsData = () => async (dispatch) => {
   const response = await getCoinsAPIData();
   dispatch(responseAPISuccess(response));
 };
+
+export const addLoginInfo = (email) => ({
+  type: ADD_LOGIN_INFO,
+  payload: {
+    email,
+  },
+});

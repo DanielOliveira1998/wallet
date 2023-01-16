@@ -21,7 +21,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       isLoading: false,
 
-    }
+    };
   }
   default: return state;
   }

@@ -84,6 +84,11 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+  isLoading: state.wallet.isLoading,
+});
+
 Login.propTypes = {
   dispatch: PropTypes.func,
   history: PropTypes.shape({
@@ -91,4 +96,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default connect()(Login);
+export default connect(mapStateToProps)(Login);

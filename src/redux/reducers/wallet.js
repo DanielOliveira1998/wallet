@@ -3,9 +3,7 @@ import { REQUEST_API, RESQUEST_SUCCESS_API } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [],
-  editor: false,
-  idToEdit: 0,
+  isLoading: false,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -20,7 +18,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       isLoading: false,
-
+      currencies: action.payload.currencies.code,
     };
   }
   default: return state;

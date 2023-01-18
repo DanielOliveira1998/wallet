@@ -6,18 +6,18 @@ export const RESQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
 export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
 
 const requestAPICoins = () => ({
-  type: requestAPICoins,
+  type: REQUEST_API,
 });
 
 const responseAPISuccess = (response) => ({
   type: RESQUEST_SUCCESS_API,
   payload: {
-    response,
+    currencies: response,
   },
 });
 
 export const fetchAPICoinsData = () => async (dispatch) => {
-  dispatch(requestAPICoins);
+  dispatch(requestAPICoins());
   const response = await getCoinsAPIData();
   dispatch(responseAPISuccess(response));
 };

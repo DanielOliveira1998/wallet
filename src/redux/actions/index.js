@@ -2,7 +2,8 @@
 import getCoinsAPIData from '../../services/awasomeAPI';
 
 export const REQUEST_API = 'REQUEST_API';
-export const RESQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
+export const REQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
+export const REQUEST_FAILURE_API = 'REQUEST_FAILURE_API';
 export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
 
 const requestAPICoins = () => ({
@@ -10,16 +11,27 @@ const requestAPICoins = () => ({
 });
 
 const responseAPISuccess = (response) => ({
-  type: RESQUEST_SUCCESS_API,
+  type: REQUEST_SUCCESS_API,
   payload: {
-    currencies: response,
+    apiResponse: response,
+  },
+});
+
+const responseAPIFailure = (error) => ({
+  type: REQUEST_FAILURE_API,
+  payload: {
+    error,
   },
 });
 
 export const fetchAPICoinsData = () => async (dispatch) => {
-  dispatch(requestAPICoins());
-  const response = await getCoinsAPIData();
-  dispatch(responseAPISuccess(response));
+  try {
+    dispatch(requestAPICoins());
+    const response = await getCoinsAPIData();
+    dispatch(responseAPISuccess(response));
+  } catch (error) {
+    dispatch(responseAPIFailure('Erro durante requisição da API'));
+  }
 };
 
 export const addLoginInfo = (email) => ({

@@ -1,9 +1,16 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_API, RESQUEST_SUCCESS_API } from '../actions';
+import { REQUEST_API, REQUEST_SUCCESS_API, REQUEST_FAILURE_API } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
-  isLoading: false,
+  wallet: {
+    currencies: [], // array de string
+    expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
+    editor: false, // valor booleano que indica de uma despesa está sendo editada
+    idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+    isLoading: false,
+    ApiEesponse: {},
+    error: null,
+  },
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -14,11 +21,19 @@ const wallet = (state = INITIAL_STATE, action) => {
       isLoading: true,
     };
   }
-  case RESQUEST_SUCCESS_API: {
+  case REQUEST_SUCCESS_API: {
     return {
       ...state,
       isLoading: false,
-      currencies: action.payload.currencies.code,
+      apiResponse: action.payload.apiResponse,
+      currencies: Object.keys(action.payload.apiResponse || {}),
+    };
+  }
+  case REQUEST_FAILURE_API: {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.payload.error,
     };
   }
   default: return state;

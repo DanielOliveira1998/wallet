@@ -39,6 +39,7 @@ class Login extends React.Component {
 
   pushHistory = () => {
     const { history } = this.props;
+    console.log(history);
     history.push('/carteira');
   };
 

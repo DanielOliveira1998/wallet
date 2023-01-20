@@ -5,6 +5,7 @@ export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
 export const REQUEST_FAILURE_API = 'REQUEST_FAILURE_API';
 export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
+export const ADD_FINANCE_INFO = 'ADD_FINANCY_INFO';
 
 const requestAPICoins = () => ({
   type: REQUEST_API,
@@ -38,5 +39,12 @@ export const addLoginInfo = (email) => ({
   type: ADD_LOGIN_INFO,
   payload: {
     email,
+  },
+});
+
+export const addFinanceInfo = (WalletItens) => ({
+  type: ADD_FINANCE_INFO,
+  payload: {
+    WalletItens,
   },
 });

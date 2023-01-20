@@ -1,5 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_API, REQUEST_SUCCESS_API, REQUEST_FAILURE_API } from '../actions';
+import { REQUEST_API, REQUEST_SUCCESS_API,
+  REQUEST_FAILURE_API, ADD_FINANCE_INFO } from '../actions';
 
 const INITIAL_STATE = {
   wallet: {
@@ -8,7 +9,7 @@ const INITIAL_STATE = {
     editor: false, // valor booleano que indica de uma despesa está sendo editada
     idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
     isLoading: false,
-    ApiEesponse: {},
+    apiEesponse: {},
     error: null,
   },
 };
@@ -34,6 +35,13 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       isLoading: false,
       error: action.payload.error,
+    };
+  }
+  case ADD_FINANCE_INFO: {
+    console.log(state);
+    return {
+      ...state,
+      expenses: [action.payload.walletItens],
     };
   }
   default: return state;

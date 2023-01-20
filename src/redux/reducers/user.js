@@ -8,6 +8,7 @@ const INITIAL_STATE = {
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_LOGIN_INFO: {
+    console.log(state);
     return {
       ...state,
       email: action.payload.email,

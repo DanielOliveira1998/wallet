@@ -42,9 +42,10 @@ export const addLoginInfo = (email) => ({
   },
 });
 
-export const addFinanceInfo = (WalletItens) => ({
+export const addFinanceInfo = (walletItens, value) => ({
   type: ADD_FINANCE_INFO,
   payload: {
-    WalletItens,
+    walletItens,
+    expensesValue: value,
   },
 });

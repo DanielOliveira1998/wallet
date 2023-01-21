@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFinanceInfo } from '../redux/actions';
+import { addFinanceInfo, fetchAPICoinsData } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor() {
@@ -9,9 +9,10 @@ class WalletForm extends Component {
     this.state = {
       value: '',
       description: '',
-      coin: '',
-      paymentMethod: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      id: 0,
     };
   }
 
@@ -22,24 +23,42 @@ class WalletForm extends Component {
     });
   };
 
-  saveFinanceInfo = (walletItens) => {
+  saveFinanceInfo = (walletItens, value) => {
     const { dispatch } = this.props;
-    dispatch(addFinanceInfo(walletItens));
+    dispatch(addFinanceInfo(walletItens, value));
+    dispatch(fetchAPICoinsData());
   };
 
   concatenateWalletItens = () => {
-    const { value, description, coin, paymentMethod, tag } = this.state;
-    const walletItens = [value, description, coin, paymentMethod, tag];
-    console.log(`WalletItens ${walletItens}`);
-    this.saveFinanceInfo(walletItens);
+    const { id, value, description, currency, method, tag } = this.state;
+    const { exchangeRates } = this.props;
+    const filterCoinAsk = exchangeRates[currency].ask;
+    const valueNumber = Number(value) * filterCoinAsk;
+    const walletItens = {
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      id,
+      exchangeRates,
+    };
+    this.saveFinanceInfo(walletItens, valueNumber);
+    this.setState((prev) => ({
+      id: prev.id + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    }));
   };
 
   render() {
-    const { currencies, expenses } = this.props;
-    const { value, description, coin, paymentMethod, tag } = this.state;
+    const { currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     const currencie = currencies || [];
-    console.log(expenses);
-
+    const coinFilter = currencie.filter((coinDel) => coinDel !== 'USDT');
     return (
       <div>
         <label htmlFor="value">
@@ -62,23 +81,23 @@ class WalletForm extends Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="coin">
+        <label htmlFor="currency">
           Moeda:
           <select
-            name="coin"
-            value={ coin }
+            name="currency"
+            value={ currency }
             data-testid="currency-input"
             onChange={ this.handleChange }
           >
-            {currencie.map((coins) => (
+            {coinFilter.map((coins) => (
               <option key={ coins } value={ coins }>{coins}</option>))}
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="method">
           Método de pagamento:
           <select
-            name="paymentMethod"
-            value={ paymentMethod }
+            name="method"
+            value={ method }
             data-testid="method-input"
             onChange={ this.handleChange }
           >
@@ -117,6 +136,7 @@ class WalletForm extends Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  exchangeRates: state.wallet.apiResponse,
 });
 
 WalletForm.propTypes = {

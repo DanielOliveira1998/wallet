@@ -22,13 +22,13 @@ const wallet = (state = INITIAL_STATE, action) => {
     };
   }
   case REQUEST_SUCCESS_API: {
-    const currenryArr = Object.keys(action.payload.apiResponse);
-    const currencyFilter = currenryArr.filter((coinDel) => coinDel !== 'USDT');
+    const currencyArr = Object.keys(action.payload.apiResponse);
+    const currencyArrFiltered = currencyArr.filter((coinDel) => coinDel !== 'USDT');
     return {
       ...state,
       isLoading: false,
       apiResponse: action.payload.apiResponse,
-      currencies: currencyFilter || {},
+      currencies: currencyArrFiltered || {},
     };
   }
   case REQUEST_FAILURE_API: {

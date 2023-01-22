@@ -58,7 +58,7 @@ class WalletForm extends Component {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const currencie = currencies || [];
-    const coinFilter = currencie.filter((coinDel) => coinDel !== 'USDT');
+    // const coinFilter = currencie.filter((coinDel) => coinDel !== 'USDT');
     return (
       <div>
         <label htmlFor="value">
@@ -89,7 +89,7 @@ class WalletForm extends Component {
             data-testid="currency-input"
             onChange={ this.handleChange }
           >
-            {coinFilter.map((coins) => (
+            {currencie.map((coins) => (
               <option key={ coins } value={ coins }>{coins}</option>))}
           </select>
         </label>

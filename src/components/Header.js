@@ -14,7 +14,6 @@ class Header extends Component {
 
   render() {
     const { email } = this.props;
-    // this.totalExpenseSum();
     return (
       <div>
         <h3 data-testid="email-field">{email}</h3>

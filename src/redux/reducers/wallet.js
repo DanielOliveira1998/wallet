@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   apiResponse: {},
   error: null,
   expensesValue: [],
+  ask: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -24,6 +25,11 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_SUCCESS_API: {
     const currencyArr = Object.keys(action.payload.apiResponse);
     const currencyArrFiltered = currencyArr.filter((coinDel) => coinDel !== 'USDT');
+    let currencyNameArr = [];
+    for (let index = 0; index < currencyArr.length; index += 1) {
+      currencyNameArr = [...currencyNameArr,
+        { [currencyArr[index]]: action.payload.apiResponse[currencyArr[index]].name }];
+    }
     return {
       ...state,
       isLoading: false,
@@ -39,19 +45,14 @@ const wallet = (state = INITIAL_STATE, action) => {
     };
   }
   case ADD_FINANCE_INFO: {
-    console.log(action.payload.expensesValue);
     return {
       ...state,
-      expenses: [...state.expenses, [action.payload.walletItens]],
+      expenses: [...state.expenses, action.payload.walletItens],
       expensesValue: [...state.expensesValue, action.payload.expensesValue],
+      ask: [...state.ask, action.payload.ask],
     };
   }
-  // case SUM_FINANCE_VALUE: {
-  //   return {
-  //     ...state,
-  //     totalSum: state.wallet.expenses.reduce((acc,curr) => acc + (curr.value))
-  //   }
-  // }
+
   default: return state;
   }
 };

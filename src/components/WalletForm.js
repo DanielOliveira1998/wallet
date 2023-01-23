@@ -23,9 +23,9 @@ class WalletForm extends Component {
     });
   };
 
-  saveFinanceInfo = (walletItens, value) => {
+  saveFinanceInfo = (walletItens, value, filterCoinAsk) => {
     const { dispatch } = this.props;
-    dispatch(addFinanceInfo(walletItens, value));
+    dispatch(addFinanceInfo(walletItens, value, filterCoinAsk));
     dispatch(fetchAPICoinsData());
   };
 
@@ -43,7 +43,7 @@ class WalletForm extends Component {
       id,
       exchangeRates,
     };
-    this.saveFinanceInfo(walletItens, valueNumber);
+    this.saveFinanceInfo(walletItens, valueNumber, filterCoinAsk);
     this.setState((prev) => ({
       id: prev.id + 1,
       value: '',

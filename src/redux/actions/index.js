@@ -6,6 +6,7 @@ export const REQUEST_SUCCESS_API = 'RESQUEST_SUCCESS_API';
 export const REQUEST_FAILURE_API = 'REQUEST_FAILURE_API';
 export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
 export const ADD_FINANCE_INFO = 'ADD_FINANCY_INFO';
+export const DEL_FINANCE_INFO = 'DEL_FINANCE_INFO';
 
 const requestAPICoins = () => ({
   type: REQUEST_API,
@@ -42,11 +43,16 @@ export const addLoginInfo = (email) => ({
   },
 });
 
-export const addFinanceInfo = (walletItens, value, filterCoinAsk) => ({
+export const addFinanceInfo = (walletItens) => ({
   type: ADD_FINANCE_INFO,
   payload: {
     walletItens,
-    expensesValue: value,
-    ask: filterCoinAsk,
+  },
+});
+
+export const delFinanceInfo = (expenses) => ({
+  type: DEL_FINANCE_INFO,
+  payload: {
+    expenses,
   },
 });

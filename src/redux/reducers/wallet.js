@@ -1,6 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { REQUEST_API, REQUEST_SUCCESS_API,
-  REQUEST_FAILURE_API, ADD_FINANCE_INFO } from '../actions';
+  REQUEST_FAILURE_API, ADD_FINANCE_INFO, DEL_FINANCE_INFO } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -10,8 +10,6 @@ const INITIAL_STATE = {
   isLoading: false,
   apiResponse: {},
   error: null,
-  expensesValue: [],
-  ask: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -48,8 +46,13 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.payload.walletItens],
-      expensesValue: [...state.expensesValue, action.payload.expensesValue],
-      ask: [...state.ask, action.payload.ask],
+    };
+  }
+
+  case DEL_FINANCE_INFO: {
+    return {
+      ...state,
+      expenses: action.payload.expenses,
     };
   }
 

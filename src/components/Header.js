@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   totalExpenseSum = () => {
-    const { expensesValue } = this.props;
-    if (expensesValue.length !== 0) {
+    const { expenses } = this.props;
+    if (expenses.length !== 0) {
+      const expensesValue = expenses.map((expense) => Number(expense.value));
       const expensesSum = expensesValue.reduce((acc, curr) => acc + curr);
       return expensesSum.toFixed(2);
     }
@@ -28,7 +29,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  expensesValue: state.wallet.expensesValue,
+  expenses: state.wallet.expenses,
 });
 
 Header.propTypes = {

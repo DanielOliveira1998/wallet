@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+// import { delFinanceInfo } from '../redux/actions';
 
 class Table extends Component {
   // constructor() {
@@ -10,12 +11,13 @@ class Table extends Component {
   //   };
   // }
 
-  // deleteExpense = ({ target }) => {
-  //   const { expenses } = this.props;
-  //   const idSelected = target.id;
+  // deleteExpense = (id) => {
+  //   const { expenses, dispatch } = this.props;
+  //   // console.log(expense);
   //   const deleteExpense = expenses
-  //     .filter((expnesesItem) => expnesesItem.id !== idSelected);
-  //   addFinanceInfo();
+  //     .filter((expnesesItem) => expnesesItem.id !== id);
+  //   const expensesIdCorrection = deleteExpense.map((item, index) => item.id === index);
+  //   dispatch(delFinanceInfo(expensesIdCorrection));
   // };
 
   render() {
@@ -56,11 +58,18 @@ class Table extends Component {
               <td>Real</td>
               <td>
                 <td>
-                  <button type="button">Editar</button>
                   <button
                     type="button"
-                    // name={ expnesesItem.id }
-                    // onClick={ this.deleteExpense(expensesItem) }
+                    onClick={ () => {} }
+                    data-testid="edit-btn"
+                  >
+                    Editar
+
+                  </button>
+                  <button
+                    type="button"
+                    // onClick={ this.deleteExpense(expensesItem.id) }
+                    data-testid="delete-btn"
                   >
                     Excluir
 

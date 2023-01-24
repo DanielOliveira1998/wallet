@@ -23,17 +23,15 @@ class WalletForm extends Component {
     });
   };
 
-  saveFinanceInfo = (walletItens, value, filterCoinAsk) => {
+  saveFinanceInfo = (walletItens) => {
     const { dispatch } = this.props;
-    dispatch(addFinanceInfo(walletItens, value, filterCoinAsk));
+    dispatch(addFinanceInfo(walletItens));
     dispatch(fetchAPICoinsData());
   };
 
   concatenateWalletItens = () => {
     const { id, value, description, currency, method, tag } = this.state;
     const { exchangeRates } = this.props;
-    const filterCoinAsk = exchangeRates[currency].ask;
-    const valueNumber = Number(value) * filterCoinAsk;
     const walletItens = {
       value,
       currency,
@@ -43,7 +41,7 @@ class WalletForm extends Component {
       id,
       exchangeRates,
     };
-    this.saveFinanceInfo(walletItens, valueNumber, filterCoinAsk);
+    this.saveFinanceInfo(walletItens);
     this.setState((prev) => ({
       id: prev.id + 1,
       value: '',
@@ -58,7 +56,6 @@ class WalletForm extends Component {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const currencie = currencies || [];
-    // const coinFilter = currencie.filter((coinDel) => coinDel !== 'USDT');
     return (
       <div>
         <label htmlFor="value">

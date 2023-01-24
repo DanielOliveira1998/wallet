@@ -23,7 +23,7 @@ class Table extends Component {
 
   render() {
     const { expenses, editor } = this.props;
-    console.log(editor);
+    // console.log(editor);
     return (
       <table>
         <thead>
@@ -50,7 +50,6 @@ class Table extends Component {
               <td>
                 {Number(expensesItem
                   .exchangeRates[expensesItem.currency].ask).toFixed(2)}
-
               </td>
               <td>
                 {(Number(expensesItem.value) * Number(expensesItem

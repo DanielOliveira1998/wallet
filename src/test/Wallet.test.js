@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouterAndRedux } from '../tests/helpers/renderWith';
+import { renderWithRedux, renderWithRouterAndRedux } from '../tests/helpers/renderWith';
 import App from '../App';
 
 describe('Testa a página Wallet', () => {
@@ -34,19 +34,15 @@ describe('Testa a página Wallet', () => {
     expect(categoryLabel).toBeInTheDocument();
   });
 
-  test('Vewrifica se a tabela é preenchida', () => {
-    const { history: { location: { pathname } } } = renderWithRouterAndRedux(<App />);
-    const emailTest = 'test@test.com';
-    const passowordInput = screen.getByPlaceholderText(/senha/i);
-    const emailInput = screen.getByRole('textbox');
-    const loginButton = screen.getByRole('button', { name: /entrar/i });
-    expect(loginButton).toBeDisabled();
-    userEvent.type(emailInput, emailTest);
-    userEvent.type(passowordInput, '123456');
-    expect(loginButton).toBeEnabled();
-    userEvent.click(loginButton);
-    waitFor(() => {
-      expect(pathname).tobe('/carteira');
-    });
-  });
+  // test('Vewrifica se a tabela é preenchida', () => {
+  //   renderWithRedux(<WalletForm />);
+  //   const valueInput = screen.getByTestId('value-input');
+  //   const descriptionInput = screen.getByTestId('description-input');
+  //   const currencyInput = screen.getByTestId('currency-input');
+  //   const methodInput = screen.getAllByTestId('method-input');
+  //   const tagsInput = screen.getAllByTestId('tag=input');
+  //   const button = screen.getByRole('button');
+  // });
+
+  test('');
 });

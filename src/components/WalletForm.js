@@ -60,7 +60,9 @@ class WalletForm extends Component {
     const { value, description, currency, method, tag } = this.state;
     const { dispatch, expenses, idToEdit } = this.props;
     const searchExpense = expenses.map((expense) => {
-      if (expenses.id === idToEdit) {
+      console.log(expense.id, idToEdit);
+      if (expense.id === idToEdit) {
+        console.log('entrou if');
         return {
           ...expense,
           value,
@@ -72,7 +74,7 @@ class WalletForm extends Component {
       }
       return expense;
     });
-    console.log('false chamado');
+    console.log(this.state);
     dispatch(modifyFinanceInfo(searchExpense));
   };
 
@@ -80,7 +82,7 @@ class WalletForm extends Component {
     const { currencies, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const currencie = currencies || [];
-    console.log('walletform', editor);
+    // console.log('walletform', editor);
     return (
       <div>
         <label htmlFor="value">

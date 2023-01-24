@@ -6,7 +6,10 @@ class Header extends Component {
   totalExpenseSum = () => {
     const { expenses } = this.props;
     if (expenses.length !== 0) {
-      const expensesValue = expenses.map((expense) => Number(expense.value));
+      // const expensesValue = expenses.map((expense) => Number(expense.value));
+      const expensesValue = expenses.map((expense) => Number(expense.value)
+      * Number(expense
+        .exchangeRates[expense.currency].ask));
       const expensesSum = expensesValue.reduce((acc, curr) => acc + curr);
       return expensesSum.toFixed(2);
     }

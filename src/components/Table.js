@@ -19,7 +19,7 @@ class Table extends Component {
   // };
 
   render() {
-    const { expenses, ask, expensesValue } = this.props;
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -36,20 +36,35 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expnesesItem) => (
-            <tr key={ expnesesItem.id }>
-              <td>{expnesesItem.description}</td>
-              <td>{expnesesItem.tag}</td>
-              <td>{expnesesItem.method}</td>
-              <td>{expnesesItem.value}</td>
-              <td>{expnesesItem.exchangeRates[expnesesItem.currency].name}</td>
-              <td>{Number(ask[expnesesItem.id]).toFixed(2)}</td>
-              <td>{expensesValue[expnesesItem.id].toFixed(2)}</td>
+          {expenses.map((expensesItem) => (
+            <tr key={ expensesItem.id }>
+              <td>{expensesItem.description}</td>
+              <td>{expensesItem.tag}</td>
+              <td>{expensesItem.method}</td>
+              <td>{Number(expensesItem.value).toFixed(2)}</td>
+              <td>{expensesItem.exchangeRates[expensesItem.currency].name}</td>
+              <td>
+                {Number(expensesItem
+                  .exchangeRates[expensesItem.currency].ask).toFixed(2)}
+
+              </td>
+              <td>
+                {(Number(expensesItem.value) * Number(expensesItem
+                  .exchangeRates[expensesItem.currency].ask)).toFixed(2)}
+
+              </td>
               <td>Real</td>
               <td>
                 <td>
                   <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
+                  <button
+                    type="button"
+                    // name={ expnesesItem.id }
+                    // onClick={ this.deleteExpense(expensesItem) }
+                  >
+                    Excluir
+
+                  </button>
                 </td>
               </td>
             </tr>

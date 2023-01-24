@@ -4,6 +4,11 @@ import { renderWithRouterAndRedux } from '../tests/helpers/renderWith';
 import App from '../App';
 
 describe('Testa a página Login', () => {
+  test('verifica o pathname', () => {
+    const { history: { location: { pathname } } } = renderWithRouterAndRedux(<App />);
+    expect(pathname).toBe('/');
+  });
+
   test('Contém dois inputs e um botão.', () => {
     renderWithRouterAndRedux(<App />);
     const passowordInput = screen.getByPlaceholderText(/senha/i);
@@ -34,6 +39,7 @@ describe('Testa a página Login', () => {
     const emailInput = screen.getByRole('textbox');
     const loginButton = screen.getByRole('button', { name: /entrar/i });
     expect(loginButton).toBeDisabled();
+    expect(pathname).toBe('/');
     userEvent.type(emailInput, 'test@test.com');
     userEvent.type(passowordInput, '123456');
     expect(loginButton).toBeEnabled();

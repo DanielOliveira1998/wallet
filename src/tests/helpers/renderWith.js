@@ -48,14 +48,14 @@ export function renderWithRedux(component, options = {}) {
   };
 }
 
-export function renderWithRouterAndRedux(component, options = {}) {
+export function renderWithRouterAndRedux(component, options = {}, initialState) {
   const {
     initialEntries = ['/'],
     history = createMemoryHistory({ initialEntries }),
   } = options;
 
   return {
-    ...renderWithRedux(withRouter(component, history), options),
+    ...renderWithRedux(withRouter(component, history), { initialState }),
     history,
   };
 }

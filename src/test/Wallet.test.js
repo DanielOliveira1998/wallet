@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRedux, renderWithRouterAndRedux } from '../tests/helpers/renderWith';
+import { renderWithRouterAndRedux } from '../tests/helpers/renderWith';
 import App from '../App';
 
 describe('Testa a página Wallet', () => {

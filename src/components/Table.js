@@ -22,8 +22,7 @@ class Table extends Component {
   };
 
   render() {
-    const { expenses, editor } = this.props;
-    // console.log(editor);
+    const { expenses } = this.props;
     return (
       <table>
         <thead>

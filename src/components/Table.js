@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { delFinanceInfo } from '../redux/actions';
+import { editorMode, delFinanceInfo } from '../redux/actions';
 
 class Table extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     expenses: [],
-  //   };
-  // }
+  deleteExpense = (id) => {
+    const { expenses, dispatch } = this.props;
+    const deleteExpense = expenses
+      .filter((expnesesItem) => expnesesItem.id !== id);
+    // const expensesIdCorrection = deleteExpense.map((item, index) => {
+    //   item.id = index;
+    //   return item.id;
+    // });
+    console.log('DELETE EXPENSE', deleteExpense);
+    dispatch(delFinanceInfo(deleteExpense));
+  };
 
-  // deleteExpense = (id) => {
-  //   const { expenses, dispatch } = this.props;
-  //   // console.log(expense);
-  //   const deleteExpense = expenses
-  //     .filter((expnesesItem) => expnesesItem.id !== id);
-  //   const expensesIdCorrection = deleteExpense.map((item, index) => item.id === index);
-  //   dispatch(delFinanceInfo(expensesIdCorrection));
-  // };
+  editExpense = (id) => {
+    const { dispatch } = this.props;
+    dispatch(editorMode(id));
+  };
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, editor } = this.props;
+    console.log(editor);
     return (
       <table>
         <thead>
@@ -38,7 +40,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expensesItem) => (
+          {expenses && expenses.map((expensesItem) => (
             <tr key={ expensesItem.id }>
               <td>{expensesItem.description}</td>
               <td>{expensesItem.tag}</td>
@@ -57,24 +59,22 @@ class Table extends Component {
               </td>
               <td>Real</td>
               <td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={ () => {} }
-                    data-testid="edit-btn"
-                  >
-                    Editar
+                <button
+                  type="button"
+                  onClick={ () => this.editExpense(expensesItem.id) }
+                  data-testid="edit-btn"
+                >
+                  Editar
 
-                  </button>
-                  <button
-                    type="button"
-                    // onClick={ this.deleteExpense(expensesItem.id) }
-                    data-testid="delete-btn"
-                  >
-                    Excluir
+                </button>
+                <button
+                  type="button"
+                  onClick={ () => this.deleteExpense(expensesItem.id) }
+                  data-testid="delete-btn"
+                >
+                  Excluir
 
-                  </button>
-                </td>
+                </button>
               </td>
             </tr>
           ))}
@@ -89,6 +89,7 @@ const mapStateToProps = (state) => ({
   exchangeRates: state.wallet.apiResponse,
   ask: state.wallet.ask,
   expensesValue: state.wallet.expensesValue,
+  editor: state.wallet.editor,
 });
 
 Table.propTypes = {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFinanceInfo, fetchAPICoinsData } from '../redux/actions';
+import { addFinanceInfo, fetchAPICoinsData, modifyFinanceInfo } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor() {
@@ -31,7 +31,7 @@ class WalletForm extends Component {
 
   concatenateWalletItens = () => {
     const { id, value, description, currency, method, tag } = this.state;
-    const { exchangeRates } = this.props;
+    const { exchangeRates, editor } = this.props;
     const walletItens = {
       value,
       currency,
@@ -41,21 +41,46 @@ class WalletForm extends Component {
       id,
       exchangeRates,
     };
-    this.saveFinanceInfo(walletItens);
-    this.setState((prev) => ({
-      id: prev.id + 1,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    }));
+    if (editor) {
+      this.handleEdit();
+    } else {
+      this.saveFinanceInfo(walletItens);
+      this.setState((prev) => ({
+        id: prev.id + 1,
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      }));
+    }
+  };
+
+  handleEdit = () => {
+    const { value, description, currency, method, tag } = this.state;
+    const { dispatch, expenses, idToEdit } = this.props;
+    const searchExpense = expenses.map((expense) => {
+      if (expenses.id === idToEdit) {
+        return {
+          ...expense,
+          value,
+          description,
+          currency,
+          method,
+          tag,
+        };
+      }
+      return expense;
+    });
+    console.log('false chamado');
+    dispatch(modifyFinanceInfo(searchExpense));
   };
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const currencie = currencies || [];
+    console.log('walletform', editor);
     return (
       <div>
         <label htmlFor="value">
@@ -120,9 +145,9 @@ class WalletForm extends Component {
         </label>
         <button
           type="button"
-          onClick={ this.concatenateWalletItens }
+          onClick={ () => this.concatenateWalletItens() }
         >
-          Adicionar despesa
+          {editor ? 'Editar despesa' : 'Adicionar despesa'}
 
         </button>
       </div>
@@ -134,6 +159,8 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
   exchangeRates: state.wallet.apiResponse,
+  idToEdit: state.wallet.idToEdit,
+  editor: state.wallet.editor,
 });
 
 WalletForm.propTypes = {

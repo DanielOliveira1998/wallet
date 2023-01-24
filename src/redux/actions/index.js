@@ -7,6 +7,8 @@ export const REQUEST_FAILURE_API = 'REQUEST_FAILURE_API';
 export const ADD_LOGIN_INFO = 'ADD_LOGIN_INFO';
 export const ADD_FINANCE_INFO = 'ADD_FINANCY_INFO';
 export const DEL_FINANCE_INFO = 'DEL_FINANCE_INFO';
+export const EDITOR_MODE = 'EDITOR_MODE';
+export const MODIFY_FINANCE_INFO = 'MODIFY_FINANCE_INFO';
 
 const requestAPICoins = () => ({
   type: REQUEST_API,
@@ -54,5 +56,19 @@ export const delFinanceInfo = (expenses) => ({
   type: DEL_FINANCE_INFO,
   payload: {
     expenses,
+  },
+});
+
+export const editorMode = (id) => ({
+  type: EDITOR_MODE,
+  payload: {
+    id,
+  },
+});
+
+export const modifyFinanceInfo = (expense) => ({
+  type: MODIFY_FINANCE_INFO,
+  payload: {
+    expense,
   },
 });

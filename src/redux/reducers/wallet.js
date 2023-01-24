@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { REQUEST_API, REQUEST_SUCCESS_API,
-  REQUEST_FAILURE_API, ADD_FINANCE_INFO, DEL_FINANCE_INFO } from '../actions';
+  REQUEST_FAILURE_API, ADD_FINANCE_INFO, DEL_FINANCE_INFO,
+  EDITOR_MODE, MODIFY_FINANCE_INFO } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -37,25 +38,30 @@ const wallet = (state = INITIAL_STATE, action) => {
   }
   case REQUEST_FAILURE_API: {
     return {
-      ...state,
-      isLoading: false,
-      error: action.payload.error,
+      ...state, isLoading: false, error: action.payload.error,
     };
   }
   case ADD_FINANCE_INFO: {
     return {
-      ...state,
-      expenses: [...state.expenses, action.payload.walletItens],
+      ...state, expenses: [...state.expenses, action.payload.walletItens],
     };
   }
-
   case DEL_FINANCE_INFO: {
+    console.log('DEL_FINANCE_INFO', action.payload.expenses);
     return {
-      ...state,
-      expenses: action.payload.expenses,
+      ...state, expenses: action.payload.expenses,
     };
   }
-
+  case EDITOR_MODE: {
+    return {
+      ...state, idToEdit: action.payload.id, editor: true,
+    };
+  }
+  case MODIFY_FINANCE_INFO: {
+    return {
+      ...state, expenses: action.payload.expense, editor: false,
+    };
+  }
   default: return state;
   }
 };
